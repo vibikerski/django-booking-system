@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>{{hotel.name}}</title>
+</head>
+<main>
+    <h1>{{hotel.name}}'s rooms:</h1>
+    {% for room in rooms %}
+    <p {% if room.available %} class="available" {% else %} class="unavailable" {% endif %}>
+        {{room.name}}
+    </p>
+    {% endfor %}
+</main>
+</html>

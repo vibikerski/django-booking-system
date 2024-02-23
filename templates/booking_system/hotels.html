@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>All hotels</title>
+</head>
+<main>
+    <h1>List of all hotels</h1>
+    <ul>
+    {% for hotel in hotels %}
+        <li><a href="{% url 'hotel' hotel.id%}">{{hotel.name}}</a></li>
+    {% endfor %}
+    </ul>
+</main>
+</html>
