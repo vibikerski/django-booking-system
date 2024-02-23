@@ -8,18 +8,18 @@
     <script>
         $(document).ready(function() {
           const roomSelect = $('#room-id');
-        
+
           $('#hotel').change(function() {
             const selectedHotelId = $(this).val();
-        
+
             roomSelect.empty();
-        
+
             $.ajax({
               type: 'GET',
               url: '/rooms/by-hotel/' + selectedHotelId,
               success: function(rooms) {
                 roomSelect.append('<option value="" disabled selected>Select a Room</option>');
-        
+
                 rooms.forEach(function(room) {
                   roomSelect.append('<option value="' + room.id + '">' + room.name + '</option>');
                 });

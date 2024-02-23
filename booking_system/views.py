@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.http import JsonResponse
 from booking_system.models import User, Hotel, Room, Booking
-from datetime import datetime
+from datetime import datetime, timedelta
 
 def check_available(bookings, start, end):
     return not any(
@@ -103,3 +103,20 @@ def get_rooms_by_hotel(request, hotel_id):
     rooms = Room.objects.filter(hotel=hotel)
     rooms_list = list(rooms.values('id', 'name'))
     return JsonResponse(rooms_list, safe=False)
+
+def get_taken_dates_for_room(request, room_id):
+    room = get_object_or_404(Room, id=room_id)
+    bookings = Booking.objects.filter(room=room)
+
+    taken_dates = []
+    for booking in bookings:
+        if booking.room != room:
+            continue
+        current_date = booking.start_date
+        while current_date <= booking.end_date:
+            taken_dates.append(current_date)
+            current_date += timedelta(days=1)
+    
+    print(taken_dates)
+
+    return JsonResponse({'dates': taken_dates})
