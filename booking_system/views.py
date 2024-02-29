@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from booking_system.models import User, Hotel, Room, Booking
 from datetime import datetime, timedelta
 
+
 def check_available(bookings, start, end):
     return not any(
         start < booking.end_date or end > booking.start_date
@@ -35,10 +36,10 @@ def handle_user(email, username):
         user.save()
         return (user, None)
 
-def book_a_room(request):
+
+def book_a_room(request, room_id):
     if request.method != "POST":
         return HttpResponse('Not allowed', 405)
-    room_id = request.POST.get('room-id')
     start_date = request.POST.get('start-date')
     end_date = request.POST.get('end-date')
 
@@ -59,17 +60,21 @@ def book_a_room(request):
     booking.save()
 
     return HttpResponse(booking)
-def get_booking_form(request):
-    hotels = Hotel.objects.all()
+
+
+def get_booking_form(request, room_id):
+    room = get_object_or_404(Room, id=room_id)
+    hotel_name = room.hotel.name
     context = {
-        'hotels': hotels
+        'room': room,
+        'hotel_name': hotel_name,
     }
     return render(
         request,
         'booking_system/booking_form.html',
         context
     )
-    # TODO: ONLY ALLOW SELECTING AVAILABLE DATES IN TEMPLATE (to justify httpresponse bad request)
+
 
 def get_hotels(request):
     hotels = Hotel.objects.all()
@@ -82,6 +87,7 @@ def get_hotels(request):
         'booking_system/hotels.html',
         context
     )
+
 
 def get_hotel(request, hotel_id):
     hotel = get_object_or_404(Hotel, id=hotel_id)
@@ -98,11 +104,13 @@ def get_hotel(request, hotel_id):
         context
     )
 
+
 def get_rooms_by_hotel(request, hotel_id):
     hotel = get_object_or_404(Hotel, id=hotel_id)
     rooms = Room.objects.filter(hotel=hotel)
     rooms_list = list(rooms.values('id', 'name'))
     return JsonResponse(rooms_list, safe=False)
+
 
 def get_taken_dates_for_room(request, room_id):
     room = get_object_or_404(Room, id=room_id)
@@ -110,13 +118,8 @@ def get_taken_dates_for_room(request, room_id):
 
     taken_dates = []
     for booking in bookings:
-        if booking.room != room:
-            continue
         current_date = booking.start_date
         while current_date <= booking.end_date:
             taken_dates.append(current_date)
             current_date += timedelta(days=1)
-    
-    print(taken_dates)
-
     return JsonResponse({'dates': taken_dates})
