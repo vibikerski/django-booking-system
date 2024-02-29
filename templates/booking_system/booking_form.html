@@ -1,52 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+    .error {
+      background-color: rgb(231, 123, 123);
+    }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <title>Booking</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-          const roomSelect = $('#room-id');
-
-          $('#hotel').change(function() {
-            const selectedHotelId = $(this).val();
-
-            roomSelect.empty();
-
-            $.ajax({
-              type: 'GET',
-              url: '/rooms/by-hotel/' + selectedHotelId,
-              success: function(rooms) {
-                roomSelect.append('<option value="" disabled selected>Select a Room</option>');
-
-                rooms.forEach(function(room) {
-                  roomSelect.append('<option value="' + room.id + '">' + room.name + '</option>');
-                });
-              },
-              error: function(xhr, status, error) {
-                console.error('Error fetching rooms:', error);
-              }
-            });
-          });
-        });
-    </script>
 </head>
 <main>
-    <form action="/book" method="post">
+  <h1>{{room.name}} in {{hotel_name}}</h1>
+    <form action="{% url 'book' room.id %}" method="post">
         {% csrf_token %}
-        <p><label for="hotel">Select a hotel:</label>
-        <select name="hotel" id="hotel" required>
-            <option value="" disabled selected>Select a hotel</option>
-            {% for hotel in hotels %}
-                <option value="{{ hotel.id }}">{{ hotel.name }}</option>
-            {% endfor %}
-        </select></p>
-
-        <p><label for="room-id">Select a room:</label>
-        <select name="room-id" id="room-id" required>
-            <option value="" disabled selected>Choose the hotel first</option>
-        </select></p>
 
         <p><label for="start-date">Start date:</label>
         <input type="date" id="start-date" name="start-date" min="2024-01-23" max="2100-12-31" required></p>
@@ -63,4 +31,63 @@
         <p><input type="submit" value="Submit"></p>
     </form>
 </main>
+<script type="text/javascript" data-roomid="{{room.id|safe}}">
+  const roomId = document.currentScript.dataset.roomid;
+  
+  $.ajax({
+    url: `/rooms/${roomId}/taken`,
+    method: "GET",
+    success: function (data) {
+      takenDates = data.dates;
+    },
+    error: function (error) {
+      console.error("Error fetching taken dates:", error);
+    },
+  });
+
+  const dateInput1 = document.getElementById("start-date");
+  const dateInput2 = document.getElementById("end-date");
+  let takenDates = [];
+
+  dateInput1.addEventListener("input", () => {
+    const dateValue = new Date(dateInput1.value);
+
+    if (dateValue < new Date()) {
+      dateInput1.setCustomValidity("Please enter a date in the future.");
+    } else {
+      if (takenDates.includes(dateValue.toISOString().split("T")[0])) {
+        dateInput1.setCustomValidity("Sorry, that date is not available for the selected room.");
+      } else {
+        dateInput1.setCustomValidity("");
+      }
+    }
+
+    if (dateInput1.checkValidity()) {
+      dateInput1.classList.remove("error");
+    } else {
+      dateInput1.classList.add("error");
+    }
+  });
+
+  dateInput2.addEventListener("input", () => {
+    const dateValue = new Date(dateInput2.value);
+
+    if (dateValue < new Date()) {
+      dateInput2.setCustomValidity("Please enter a date in the future.");
+    } else {
+      if (takenDates.includes(dateValue.toISOString().split("T")[0])) {
+        dateInput2.setCustomValidity("Sorry, that date is not available for the selected room.");
+      } else {
+        dateInput2.setCustomValidity("");
+      }
+    }
+
+    if (dateInput2.checkValidity()) {
+      dateInput2.classList.remove("error");
+    } else {
+      dateInput2.classList.add("error");
+    }
+  });
+
+  </script>
 </html>
