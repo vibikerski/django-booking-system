@@ -6,7 +6,8 @@ from datetime import datetime, timedelta
 
 def check_available(bookings, start, end):
     return not any(
-        start < booking.end_date or end > booking.start_date
+        (start >= booking.start_date and start <= booking.end_date) or 
+        (end >= booking.start_date and end <= booking.end_date)
         for booking in bookings
     )
     
@@ -17,7 +18,6 @@ def validate_date(bookings, start, end):
         end = datetime.strptime(end, '%Y-%m-%d').date()
     except Exception:
         return False
-
     return False if start > end else check_available(bookings, start, end)
         
 
