@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,8 +9,8 @@
 <main>
     <h1>{{hotel.name}}'s rooms:</h1>
     {% for room in rooms %}
-    <p {% if room.available %} class="available" {% else %} class="unavailable" {% endif %}>
-        {{room.name}}
+    <p>
+        <a href="{% url 'booking_form' room.id%}">{{room.name}}</a>
     </p>
     {% endfor %}
 </main>

@@ -16,7 +16,6 @@ class Hotel(models.Model):
 class Room(models.Model):
     name = models.CharField(max_length = 127)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
-    available = models.BooleanField()
     
     def __str__(self):
         return self.name
