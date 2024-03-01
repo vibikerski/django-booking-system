@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
   <title>Booking</title>
-  <link href="/static/booking_system/css/booking_system.css" rel="stylesheet">
+  <link href="{% static 'booking_system/css/booking_system.css' %}" rel="stylesheet">
 </head>
 
 <main>
@@ -30,6 +31,6 @@
 </main>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="/static/booking_system/js/booking_form.js" type="text/javascript" data-roomid="{{room.id|safe}}"></script>
+<script src="{% static 'booking_system/js/booking_form.js' %}" type="text/javascript" data-roomid="{{room.id|safe}}"></script>
 
 </html>
