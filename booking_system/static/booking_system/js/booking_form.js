@@ -1,56 +1,33 @@
 const roomId = document.currentScript.dataset.roomid;
-  
-  $.ajax({
-    url: `/rooms/${roomId}/taken`,
-    method: "GET",
-    success: function (data) {
-      takenDates = data.dates;
-    },
-    error: function (error) {
-      console.error("Error fetching taken dates:", error);
-    },
-  });
 
-  const dateInput1 = document.getElementById("start-date");
-  const dateInput2 = document.getElementById("end-date");
-  let takenDates = [];
+$.ajax({
+  url: `/rooms/${roomId}/taken`,
+  method: "GET",
+  success: (data) => {
+    takenDates = data.dates;
+  },
+  error: (error) => {
+    console.error("Error fetching taken dates:", error);
+  },
+});
 
-  dateInput1.addEventListener("input", () => {
-    const dateValue = new Date(dateInput1.value);
+const dateInput1 = document.getElementById("start-date");
+const dateInput2 = document.getElementById("end-date");
+let takenDates = [];
 
-    if (dateValue < new Date()) {
-      dateInput1.setCustomValidity("Please enter a date in the future.");
-    } else {
-      if (takenDates.includes(dateValue.toISOString().split("T")[0])) {
-        dateInput1.setCustomValidity("Sorry, that date is not available for the selected room.");
-      } else {
-        dateInput1.setCustomValidity("");
-      }
-    }
+const validateDateInput = (dateInput) => {
+  const dateValue = new Date(dateInput.value);
+  let validityMessage = "";
 
-    if (dateInput1.checkValidity()) {
-      dateInput1.classList.remove("error");
-    } else {
-      dateInput1.classList.add("error");
-    }
-  });
+  if (dateValue < new Date()) {
+    validityMessage = "Please enter a date in the future.";
+  } else if (takenDates.includes(dateValue.toISOString().split("T")[0])) {
+    validityMessage = "Sorry, that date is not available for the selected room.";
+  }
 
-  dateInput2.addEventListener("input", () => {
-    const dateValue = new Date(dateInput2.value);
+  dateInput.setCustomValidity(validityMessage);
+  dateInput.classList.toggle("error", !dateInput.checkValidity());
+};
 
-    if (dateValue < new Date()) {
-      dateInput2.setCustomValidity("Please enter a date in the future.");
-    } else {
-      if (takenDates.includes(dateValue.toISOString().split("T")[0])) {
-        dateInput2.setCustomValidity("Sorry, that date is not available for the selected room.");
-      } else {
-        dateInput2.setCustomValidity("");
-      }
-    }
-
-    if (dateInput2.checkValidity()) {
-      dateInput2.classList.remove("error");
-    } else {
-      dateInput2.classList.add("error");
-    }
-  });
+dateInput1.addEventListener("input", () => validateDateInput(dateInput1));
+dateInput2.addEventListener("input", () => validateDateInput(dateInput2));
