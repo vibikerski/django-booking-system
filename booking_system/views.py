@@ -65,9 +65,11 @@ def book_a_room(request, room_id):
 def get_booking_form(request, room_id):
     room = get_object_or_404(Room, id=room_id)
     hotel_name = room.hotel.name
+    hotel_id = room.hotel.id
     context = {
         'room': room,
         'hotel_name': hotel_name,
+        'hotel_id': hotel_id,
     }
     return render(
         request,

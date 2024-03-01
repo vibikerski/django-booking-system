@@ -5,13 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <title>{{hotel.name}}</title>
+    <link href="{% static 'booking_system/css/basic_style.css' %}" rel="stylesheet">
 </head>
 <main>
+    {% include 'booking_system/navbar.html' %}
+    <div class="container">
     <h1>{{hotel.name}}'s rooms:</h1>
+    <ul class="normal-list">
     {% for room in rooms %}
-    <p>
+    <li>
         <a href="{% url 'booking_form' room.id%}">{{room.name}}</a>
-    </p>
+    </li>
     {% endfor %}
+    </ul>
+    </div>
 </main>
 </html>
