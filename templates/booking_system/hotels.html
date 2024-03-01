@@ -5,13 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <title>All hotels</title>
+    <link href="{% static 'booking_system/css/basic_style.css' %}" rel="stylesheet">
 </head>
 <main>
+    {% include 'booking_system/navbar.html' %}
+    <div class="container">
     <h1>List of all hotels</h1>
-    <ul>
+    <ul class="normal-list">
     {% for hotel in hotels %}
         <li><a href="{% url 'hotel' hotel.id%}">{{hotel.name}}</a></li>
     {% endfor %}
     </ul>
+    </div>
 </main>
 </html>

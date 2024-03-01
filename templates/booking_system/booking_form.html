@@ -6,11 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
   <title>Booking</title>
-  <link href="{% static 'booking_system/css/booking_system.css' %}" rel="stylesheet">
+  <link href="{% static 'booking_system/css/basic_style.css' %}" rel="stylesheet">
 </head>
 
 <main>
-  <h1>{{room.name}} in {{hotel_name}}</h1>
+  {% include 'booking_system/navbar.html' %}
+  <div class="container">
+  <h1>Room {{room.name}} in hotel "<a href="{% url 'hotel' hotel_id %}">{{hotel_name}}</a>"</h1>
     <form action="{% url 'book' room.id %}" method="post">
       {% csrf_token %}
 
@@ -28,6 +30,7 @@
 
       <p><input type="submit" value="Submit"></p>
   </form>
+  </div>
 </main>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
