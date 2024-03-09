@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.http import JsonResponse
-from booking_system.models import User, Hotel, Room, Booking
+from booking_system.models import Hotel, Room, Booking
 from datetime import datetime, timedelta
 
 
@@ -22,19 +22,8 @@ def validate_date(bookings, start, end):
         
 
 def handle_user(email, username):
-    try:
-        user = User.objects.get(email=email)
-        if user.full_name == username:
-            return (user, None)
-        else:
-            return (None, HttpResponse("Wrong user data", 404))
-    except Exception:
-        user = User(
-            full_name=username,
-            email=email
-        )
-        user.save()
-        return (user, None)
+    pass
+    # redo
 
 
 def book_a_room(request, room_id):

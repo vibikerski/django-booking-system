@@ -1,11 +1,5 @@
 from django.db import models
-
-class User(models.Model):
-    full_name = models.CharField(max_length=255)
-    email = models.EmailField(unique=True)
-    
-    def __str__(self):
-        return self.full_name
+from django.conf import settings
 
 class Hotel(models.Model):
     name = models.CharField(max_length=511)
@@ -23,7 +17,7 @@ class Room(models.Model):
     
 class Booking(models.Model):
     room = models.ForeignKey(Room, on_delete=models.SET_NULL, null=True)
-    booked_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    booked_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
     
