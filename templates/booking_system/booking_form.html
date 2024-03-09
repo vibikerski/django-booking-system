@@ -1,39 +1,40 @@
-<!DOCTYPE html>
+{% extends "booking_system/base.html" %}
 {% load static %}
-<html>
 
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="utf-8">
-  <title>Booking</title>
-  <link href="{% static 'booking_system/css/basic_style.css' %}" rel="stylesheet">
-</head>
+{% block title %}Booking{% endblock title %}
 
-<main>
-  {% include 'booking_system/navbar.html' %}
-  <div class="container">
-  <h1>Room {{room.name}} in hotel "<a href="{% url 'hotel' hotel_id %}">{{hotel_name}}</a>"</h1>
-    <form action="{% url 'book' room.id %}" method="post">
-      {% csrf_token %}
+{% block content %}
+<div class="container-lg">
+  <h1  class="text-primary">Room <strong>{{ room.name }}</strong> in hotel "<a href="{% url 'hotel' hotel_id %}">{{ hotel_name }}</a>"</h1>
+  <form action="{% url 'book' room.id %}" method="post">
+    {% csrf_token %}
 
-      <p><label for="start-date">Start date:</label>
-      <input type="date" id="start-date" name="start-date" min="2024-01-23" max="2100-12-31" required></p>
+    <div class="form-group">
+      <label for="start-date">Start date:</label>
+      <input type="date" id="start-date" name="start-date" min="2024-01-23" max="2100-12-31" required class="form-control">
+    </div>
 
-      <p><label for="end-date">End date:</label>
-      <input type="date" id="end-date" name="end-date" min="2024-01-23" max="2100-12-31" required></p>
+    <div class="form-group">
+      <label for="end-date">End date:</label>
+      <input type="date" id="end-date" name="end-date" min="2024-01-23" max="2100-12-31" required class="form-control">
+    </div>
 
-      <p><label for="email">E-mail:</label>
-      <input type="text" id="email" name="email" required></p>
+    <div class="form-group">
+      <label for="email">E-mail:</label>
+      <input type="text" id="email" name="email" required class="form-control">
+    </div>
 
-      <p><label for="user-name">Full name:</label>
-      <input type="text" id="user-name" name="user-name" required></p>
+    <div class="form-group">
+      <label for="user-name">Full name:</label>
+      <input type="text" id="user-name" name="user-name" required class="form-control">
+    </div>
 
-      <p><input type="submit" value="Submit"></p>
+    <button type="submit" class="btn btn-primary">Submit</button>
   </form>
-  </div>
-</main>
+</div>
+{% endblock content %}
 
+{% block js %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="{% static 'booking_system/js/booking_form.js' %}" type="text/javascript" data-roomid="{{room.id|safe}}"></script>
-
-</html>
+{% endblock js %}
