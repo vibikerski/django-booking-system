@@ -4,8 +4,12 @@
 {% block title %}Booking{% endblock title %}
 
 {% block content %}
-<div class="container-lg">
+<div class="container">
+  {% if room.image %}
+  <img class="img-thumbnail" src="{% static room.image.url %}" {% if room.image.alt_text %}alt="{{room.image.alt_text}}"{% endif %}>
+  {% endif %}
   <h1  class="text-primary">Room <strong>{{ room.name }}</strong> in hotel "<a href="{% url 'hotel' hotel_id %}">{{ hotel_name }}</a>"</h1>
+  
   <form action="{% url 'book' room.id %}" method="post">
     {% csrf_token %}
 

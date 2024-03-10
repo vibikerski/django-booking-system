@@ -12,8 +12,6 @@ def register(request):
             user = form.save()
             login(request, user)
             return redirect("hotels")
-        else:
-            messages.error(request, 'Wrong register info')
     else:
         form = CustomUserCreationForm()
         
@@ -24,7 +22,7 @@ def register(request):
     )
 
 
-def login(request):
+def log_in(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():

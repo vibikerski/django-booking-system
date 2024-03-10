@@ -162,3 +162,5 @@ cython_debug/
 
 .vscode
 staticfiles/admin
+booking_system/static/booking_system/img/
+staticfiles/booking_system/img

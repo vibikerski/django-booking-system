@@ -1,9 +1,17 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}{{hotel.name}}{% endblock title %}
 
 {% block content %}
 <div class="container">
+    <h1 class="text-primary">Hotel {{hotel.name}}</h1>
+    <div class="grid text-center">
+      <p class="col-md-6">{{hotel.description}}</p>
+      {% if hotel.image %}
+      <img class="img-thumbnail" src="{% static hotel.image.url %}" {% if hotel.image.alt_text %}alt="{{hotel.image.alt_text}}"{% endif %}>
+      {% endif %}
+    </div>
     <h1 class="text-primary">{{ hotel.name }}'s rooms:</h1>
     <ul class="list-group list-group-flush">
       {% for room in rooms %}
