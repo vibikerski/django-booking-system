@@ -26,7 +26,7 @@ const validateDateInput = (dateInput) => {
   }
 
   dateInput.setCustomValidity(validityMessage);
-  dateInput.classList.toggle("error", !dateInput.checkValidity());
+  dateInput.classList.toggle("is-invalid", !dateInput.checkValidity());
 };
 
 dateInput1.addEventListener("input", () => validateDateInput(dateInput1));

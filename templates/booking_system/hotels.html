@@ -1,21 +1,14 @@
-<!DOCTYPE html>
-{% load static %}
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="utf-8">
-    <title>All hotels</title>
-    <link href="{% static 'booking_system/css/basic_style.css' %}" rel="stylesheet">
-</head>
-<main>
-    {% include 'booking_system/navbar.html' %}
-    <div class="container">
-    <h1>List of all hotels</h1>
-    <ul class="normal-list">
-    {% for hotel in hotels %}
-        <li><a href="{% url 'hotel' hotel.id%}">{{hotel.name}}</a></li>
-    {% endfor %}
+{% extends "base.html" %}
+
+{% block title %}All hotels{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-primary">List of all hotels</h1>
+    <ul class="list-group list-group-flush">
+      {% for hotel in hotels %}
+        <li class="list-group-item bg-light"><a href="{% url 'hotel' hotel.id%}" class="text-decoration-none">{{ hotel.name }}</a></li>
+      {% endfor %}
     </ul>
-    </div>
-</main>
-</html>
+  </div>
+{% endblock content %}

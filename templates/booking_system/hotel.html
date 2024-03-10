@@ -1,23 +1,22 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 {% load static %}
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="utf-8">
-    <title>{{hotel.name}}</title>
-    <link href="{% static 'booking_system/css/basic_style.css' %}" rel="stylesheet">
-</head>
-<main>
-    {% include 'booking_system/navbar.html' %}
-    <div class="container">
-    <h1>{{hotel.name}}'s rooms:</h1>
-    <ul class="normal-list">
-    {% for room in rooms %}
-    <li>
-        <a href="{% url 'booking_form' room.id%}">{{room.name}}</a>
-    </li>
-    {% endfor %}
-    </ul>
+
+{% block title %}{{hotel.name}}{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-primary">Hotel {{hotel.name}}</h1>
+    <div class="grid text-center row">
+      <p class="col-xs-12 col-sm-12 col-md-4 col-lg-6">{{hotel.description}}</p>
+      {% if hotel.image %}
+      <img class="img-thumbnail col-xs-12 col-sm-12 col-md-8 col-lg-6"src="{% static hotel.image.url %}" {% if hotel.image.alt_text %}alt="{{hotel.image.alt_text}}"{% endif %}>
+      {% endif %}
     </div>
-</main>
-</html>
+    <h1 class="text-primary">{{ hotel.name }}'s rooms:</h1>
+    <ul class="list-group list-group-flush">
+      {% for room in rooms %}
+        <li class="list-group-item bg-light"><a href="{% url 'booking_form' room.id%}">{{ room.name }}</a></li>
+      {% endfor %}
+    </ul>
+</div>
+{% endblock content %}
