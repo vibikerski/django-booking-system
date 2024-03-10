@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load myfilters %}
 
-{% block title %}Register{% endblock title %}
+{% block title %}Log in{% endblock title %}
 
 {% block content %}
 <div class="container">
@@ -12,7 +12,7 @@
     {% endfor %}
     </ul>
     {% endif %}
-    <form method="post" action="{% url 'register' %}">
+    <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
         {% for field in form %}
             <div class="fieldWrapper form-group">
@@ -28,7 +28,7 @@
             </div>
         {% endfor %}
 
-        <button type="submit" class="btn btn-primary">Register</button>
+        <button type="submit" class="btn btn-primary">Log in</button>
     </form>
 </div>
 {% endblock content %}

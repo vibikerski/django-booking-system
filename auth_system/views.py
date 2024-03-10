@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from auth_system.forms import CustomUserCreationForm
+from django.contrib.auth.decorators import login_required
 
 
 def register(request):
@@ -34,3 +35,16 @@ def log_in(request):
                 return redirect("hotels")
             else:
                 messages.error(request, 'Wrong login info')
+    else:
+        form = AuthenticationForm()
+    
+    return render(
+        request, 
+        template_name='auth_system/login.html',
+        context = {'form': form}
+    )
+
+@login_required
+def log_out(request):
+    logout(request)
+    return redirect('hotels')

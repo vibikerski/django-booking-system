@@ -1,4 +1,11 @@
 <nav class="nav justify-content-end">
     <a href="{% url 'hotels'%}" class="nav-link">See all hotels</a>
+    {% if user.is_authenticated %}
+    <a href="{% url 'logout' %}" class="nav-link">Log out</a>
+    <span class="nav-link disabled">{{user.get_username}}</span>
+    {% else %}
+    <a href="{% url 'register' %}" class="nav-link">Register</a>
+    <a href="{% url 'login' %}" class="nav-link">Log in</a>
+    {% endif %}
     <span class="nav-link disabled">Hotel booking system.</span>
 </nav>

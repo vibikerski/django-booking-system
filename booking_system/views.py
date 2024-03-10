@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from booking_system.models import Hotel, Room, Booking
 from datetime import datetime, timedelta
@@ -19,24 +20,15 @@ def validate_date(bookings, start, end):
     except Exception:
         return False
     return False if start > end else check_available(bookings, start, end)
-        
-
-def handle_user(email, username):
-    pass
-    # redo
 
 
+@login_required
 def book_a_room(request, room_id):
     if request.method != "POST":
         return HttpResponse('Not allowed', 405)
     start_date = request.POST.get('start-date')
     end_date = request.POST.get('end-date')
-
-    email = request.POST.get('email')
-    username = request.POST.get('user-name')
-    user, err = handle_user(email, username)
-    if err:
-        return err
+    user = request.user
 
     room = get_object_or_404(Room, id=room_id)
     validated_date = validate_date(Booking.objects.filter(room=room), start_date, end_date)
@@ -55,10 +47,12 @@ def get_booking_form(request, room_id):
     room = get_object_or_404(Room, id=room_id)
     hotel_name = room.hotel.name
     hotel_id = room.hotel.id
+        
     context = {
         'room': room,
         'hotel_name': hotel_name,
         'hotel_id': hotel_id,
+        'authenticated': request.user.is_authenticated,
     }
     return render(
         request,
