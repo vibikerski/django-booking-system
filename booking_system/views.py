@@ -1,7 +1,7 @@
-from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from booking_system.models import Hotel, Room, Booking
+from booking_system.models import Hotel, Room, Booking, Review
 from datetime import datetime, timedelta
 
 
@@ -42,21 +42,42 @@ def book_a_room(request, room_id):
 
     return HttpResponse(booking)
 
+@login_required
+def review_a_room(request, room_id):
+    if request.method != "POST":
+        return HttpResponse('Not allowed', 405)
+    user = request.user
+    rating = request.POST.get('rating')
+    feedback = request.POST.get('feedback')
+    room = get_object_or_404(Room, id=room_id)
+    
+    review = Review(
+        rating=rating,
+        feedback=feedback,
+        user=user,
+        room=room
+    )
+    review.save()
+    
+    return redirect("room", room_id)
 
-def get_booking_form(request, room_id):
+
+def get_room(request, room_id):
     room = get_object_or_404(Room, id=room_id)
     hotel_name = room.hotel.name
     hotel_id = room.hotel.id
+    reviews = Review.objects.filter(room=room)
         
     context = {
         'room': room,
         'hotel_name': hotel_name,
         'hotel_id': hotel_id,
         'authenticated': request.user.is_authenticated,
+        'reviews': reviews,
     }
     return render(
         request,
-        'booking_system/booking_form.html',
+        'booking_system/room.html',
         context
     )
 
