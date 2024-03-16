@@ -36,12 +36,14 @@ def get_taken_dates_for_room(request, room_id):
     room = get_object_or_404(Room, id=room_id)
     bookings = Booking.objects.filter(room=room)
 
-    taken_dates = []
-    for booking in bookings:
-        current_date = booking.start_date
-        while current_date <= booking.end_date:
-            taken_dates.append(current_date)
-            current_date += timedelta(days=1)
+    taken_dates = [
+        current_date
+        for booking in bookings
+        for current_date in (
+            booking.start_date + timedelta(days=n)
+            for n in range((booking.end_date - booking.start_date).days + 1)
+        )
+    ]
     return JsonResponse({'dates': taken_dates})
 
 
