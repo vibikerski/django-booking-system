@@ -18,5 +18,9 @@
         <li class="list-group-item bg-light"><a href="{% url 'room' room.id%}">{{ room.name }}</a></li>
       {% endfor %}
     </ul>
+
+    <h2>Experiences of our guests</h2>
+    <p>These reviews should be related to the general experience at the hotel and not the state of the specific room.</p>
+  {% include "booking_system/review_block.html" %}
 </div>
 {% endblock content %}

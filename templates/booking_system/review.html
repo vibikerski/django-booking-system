@@ -1,0 +1,16 @@
+<div class="col-md-6 col-lg-4 mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">{{review.user.username}}'s Review</h5>
+            <p class="card-text">Rating: <span class="badge-primary">{{review.rating}}</span></p>
+        </div>
+        {% if review.feedback %}
+            <div class="card-body">
+                <p class="card-text">{{review.feedback}}</p>
+            </div>
+        {% endif %}
+        <div class="card-footer text-muted">
+            Date: {{review.created_at}}
+        </div>
+    </div>
+</div>
