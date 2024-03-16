@@ -4,4 +4,4 @@ from auth_system.models import CustomUser
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = UserCreationForm.Meta.fields + ("phone_number", "first_name", "last_name")
+        fields = UserCreationForm.Meta.fields + ("phone_number", "first_name", "last_name", "email")
