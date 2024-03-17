@@ -13,6 +13,7 @@
                         <h3 class="card-title text-secondary">Room <a href="{% url 'room' booking.room.id%}">{{booking.room.name}}</a> at {{booking.room.hotel.name}}</h3>
                         <p class="card-text"><strong>From:</strong> {{booking.start_date}}</p>
                         <p class="card-text"><strong>To:</strong> {{booking.end_date}}</p>
+                        <a href="{% url 'remove_booking' booking.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to remove this booking?');">Remove Booking</a>
                     </div>
                 </div>
             </div>

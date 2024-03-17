@@ -197,3 +197,24 @@ def review_a_hotel(request, hotel_id):
     review.save()
     
     return redirect("hotel", hotel_id)
+
+
+@login_required
+def cancel_booking(request, booking_id):
+    user = request.user
+    booking = get_object_or_404(Booking, id=booking_id)
+    if booking.booked_by != user:
+        return HttpResponse(403)
+    
+    booking.delete()
+    
+    bookings = Booking.objects.filter(booked_by=user).order_by('start_date')
+    context = {
+        'bookings': bookings
+    }
+    
+    return render(
+        request,
+        "booking_system/bookings.html",
+        context
+    )
