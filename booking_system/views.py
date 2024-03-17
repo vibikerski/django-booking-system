@@ -108,20 +108,6 @@ def get_hotel(request, hotel_id):
 # AUTHENTICATED DISPLAY
 
 @login_required
-def get_account(request):
-    user = request.user
-    bookings = Booking.objects.filter(booked_by=user).order_by('start_date')
-    context = {
-        'user': user,
-    }
-    
-    return render(
-        request,
-        "booking_system/account.html",
-        context
-    )
-
-@login_required
 def get_bookings(request):
     user = request.user
     bookings = Booking.objects.filter(booked_by=user).order_by('start_date')

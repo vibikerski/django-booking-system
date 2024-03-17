@@ -4,17 +4,24 @@
 
 {% block content %}
 <div class="container">
-    <h1 class="text-primary">Your bookings</h1>
+    <h1 class="text-primary mb-4">Your bookings</h1>
     <div class="row">
         {% for booking in bookings %}
-            <div class="card mb-3 bg-light">
-                <div class="card-body">
-                    <h3 class="card-title text-secondary">Room <a href="{% url 'room' booking.room.id%}">{{booking.room.name}}</a> at {{booking.room.hotel.name}}</h3>
-                    <p class="card-text"><strong>From:</strong> {{booking.start_date}}</p>
-                    <p class="card-text"><strong>To:</strong> {{booking.end_date}}</p>
+            <div class="col-lg-6 col-md-12">
+                <div class="card mb-3 bg-light">
+                    <div class="card-body">
+                        <h3 class="card-title text-secondary">Room <a href="{% url 'room' booking.room.id%}">{{booking.room.name}}</a> at {{booking.room.hotel.name}}</h3>
+                        <p class="card-text"><strong>From:</strong> {{booking.start_date}}</p>
+                        <p class="card-text"><strong>To:</strong> {{booking.end_date}}</p>
+                    </div>
                 </div>
             </div>
         {% endfor %}
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h2 class="text-primary"><a href="{% url 'account' %}">View your account</a></h2>
+        </div>
     </div>
 </div>
 {% endblock content %}

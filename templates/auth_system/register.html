@@ -6,29 +6,30 @@
 {% block content %}
 <div class="container">
     {% if messages %}
-    <ul>
-    {% for message in messages %}
-        <li>{{message}}</li>
-    {% endfor %}
-    </ul>
+    <div class="alert alert-info">
+        <ul>
+            {% for message in messages %}
+                <li>{{message}}</li>
+            {% endfor %}
+        </ul>
+    </div>
     {% endif %}
     <form method="post" action="{% url 'register' %}">
         {% csrf_token %}
         {% for field in form %}
-            <div class="fieldWrapper form-group">
+            <div class="form-group">
                 {{ field.errors }}
                 {{ field.label_tag }}
-                {{ field|addclass:'form-control'}}
+                {{ field|addclass:'form-control' }}
 
                 {% if field.help_text %}
-                <p class="help" id="{{ field.auto_id }}_helptext">
+                <small class="form-text text-muted" id="{{ field.auto_id }}_helptext">
                     {{ field.help_text|safe }}
-                </p>
+                </small>
                 {% endif %}
             </div>
         {% endfor %}
-
-        <button type="submit" class="btn btn-primary">Register</button>
+        <button type="submit" class="btn btn-primary mt-3">Register</button>
     </form>
 </div>
 {% endblock content %}

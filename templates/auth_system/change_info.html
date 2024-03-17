@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Change account info{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-primary mb-4">Change your account information</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-container bg-light p-4">
+                <h2 class="text-primary">Change Email</h2>
+                <form method="post" action="{% url 'change_email' %}">
+                    {% csrf_token %}
+                    {{ email_form.as_p }}
+                    <button type="submit" class="btn btn-primary mt-3">Change Email</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-container bg-light p-4">
+                <h2 class="text-primary">Change Phone Number</h2>
+                <form method="post" action="{% url 'change_phone_number' %}">
+                    {% csrf_token %}
+                    {{ phone_form.as_p }}
+                    <button type="submit" class="btn btn-primary mt-3">Change Phone Number</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="form-container bg-light p-4">
+                <h2 class="text-primary">Change Password</h2>
+                <form method="post" action="{% url 'change_password' %}">
+                    {% csrf_token %}
+                    {{ password_form.as_p }}
+                    <button type="submit" class="btn btn-primary mt-3">Change Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h2><a href="{% url 'account' %}" class="btn btn-primary">View your account</a></h2>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
