@@ -113,12 +113,25 @@ def get_account(request):
     bookings = Booking.objects.filter(booked_by=user).order_by('start_date')
     context = {
         'user': user,
-        'bookings': bookings
     }
     
     return render(
         request,
         "booking_system/account.html",
+        context
+    )
+
+@login_required
+def get_bookings(request):
+    user = request.user
+    bookings = Booking.objects.filter(booked_by=user).order_by('start_date')
+    context = {
+        'bookings': bookings
+    }
+    
+    return render(
+        request,
+        "booking_system/bookings.html",
         context
     )
 
@@ -142,7 +155,26 @@ def book_a_room(request, room_id):
     )
     booking.save()
 
-    return HttpResponse(booking)
+    hotel_name = room.hotel.name
+    hotel_id = room.hotel.id
+    reviews = room.reviews.all()
+    review_url = reverse('review_room', args=[room_id])
+        
+    context = {
+        'room': room,
+        'hotel_name': hotel_name,
+        'hotel_id': hotel_id,
+        'authenticated': request.user.is_authenticated,
+        'reviews': reviews,
+        'review_url': review_url,
+        'success_booked': True,
+    }
+
+    return render(
+        request,
+        'booking_system/room.html',
+        context
+    )
 
 @login_required
 def review_a_room(request, room_id):
