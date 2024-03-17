@@ -29,5 +29,24 @@ const validateDateInput = (dateInput) => {
   dateInput.classList.toggle("is-invalid", !dateInput.checkValidity());
 };
 
-dateInput1.addEventListener("input", () => validateDateInput(dateInput1));
-dateInput2.addEventListener("input", () => validateDateInput(dateInput2));
+const validateEndDate = () => {
+  const startDateValue = new Date(dateInput1.value);
+  const endDateValue = new Date(dateInput2.value);
+
+  if (endDateValue <= startDateValue) {
+    dateInput2.setCustomValidity("End date must be after the start date.");
+    dateInput2.classList.add("is-invalid");
+  } else {
+    dateInput2.setCustomValidity("");
+    dateInput2.classList.remove("is-invalid");
+  }
+};
+
+dateInput1.addEventListener("input", () => {
+  validateDateInput(dateInput1);
+  validateEndDate();
+});
+dateInput2.addEventListener("input", () => {
+  validateDateInput(dateInput2);
+  validateEndDate();
+});

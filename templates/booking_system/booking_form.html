@@ -1,3 +1,8 @@
+{% if success_booked %}
+<div class="alert alert-success" role="alert">
+    Success! See <a href="{% url 'bookings' %}">all your bookings</a>.
+</div>  
+{% endif %}
 <h2>Want to book this room?</h2>
 <form action="{% url 'book' room.id %}" method="post">
     {% csrf_token %}
