@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
 from django.urls import reverse
 from booking_system.models import Hotel, Room, Booking, Review
@@ -204,7 +205,7 @@ def cancel_booking(request, booking_id):
     user = request.user
     booking = get_object_or_404(Booking, id=booking_id)
     if booking.booked_by != user:
-        return HttpResponse(403)
+        raise PermissionDenied()
     
     booking.delete()
     

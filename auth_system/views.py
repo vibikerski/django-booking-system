@@ -69,7 +69,7 @@ def get_account(request):
 @login_required
 def change_info(request):
     if request.method == "POST":
-        return HttpResponse('Bad request', 404)
+        return HttpResponse('Bad request', 400)
     
     user = request.user
     context = {
