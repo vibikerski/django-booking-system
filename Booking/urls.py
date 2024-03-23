@@ -24,6 +24,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("booking_system.urls")),
     path("", include('auth_system.urls')),
+    path("hotels/", include("hotels.urls")),
+    path("rooms/", include("rooms.urls")),
+    path("", include("reviews.urls"))
 ]
 
 if settings.DEBUG is True:
