@@ -21,7 +21,7 @@ class Review(models.Model):
 
 
 class Amenity(models.Model):
-    name = models.CharField(max_length=127)
+    name = models.CharField(max_length=127, unique=True)
     img = models.ImageField(upload_to='booking_system/sym', max_length=100, null=True, blank=True)
     description = models.CharField(max_length=255)
 
@@ -42,14 +42,14 @@ class Hotel(models.Model):
 
 class RoomType(models.Model):
     name = models.CharField(max_length=127)
-    capacity = models.IntegerField()
+    capacity = models.IntegerField(validators=[MinValueValidator(1)])
 
     def __str__(self):
         return self.name
 
 
 class Facility(models.Model):
-    name = models.CharField(max_length=127)
+    name = models.CharField(max_length=127, unique=True)
     img = models.ImageField(upload_to='booking_system/sym', max_length=100, null=True, blank=True)
     description = models.CharField(max_length=255)
 
@@ -64,7 +64,7 @@ class Room(models.Model):
     image = models.ImageField(upload_to='booking_system/', max_length=100, null=True, blank=True)
     reviews = fields.GenericRelation(Review)
     facilities = models.ManyToManyField(Facility)
-    current_price = models.IntegerField()
+    current_price = models.IntegerField(validators=[MinValueValidator(1)])
     
     def __str__(self):
         return self.name

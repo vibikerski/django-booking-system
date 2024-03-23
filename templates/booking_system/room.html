@@ -6,11 +6,26 @@
 {% block content %}
 <div class="container">
   <div class="grid row">
-  <h1  class="text-primary">Room <strong>{{ room.name }}</strong> in hotel "<a href="{% url 'hotel' hotel_id %}">{{ hotel_name }}</a>"</h1>
+  <h1  class="text-primary">Room "<strong>{{ room.name }}</strong>" in hotel "<a href="{% url 'hotel' hotel_id %}">{{ hotel_name }}</a>"</h1>
   {% if room.image %}
   <img class="img-thumbnail col-xs-12 col-sm-12 col-md-8 col-lg-6" src="{{ room.image.url }}" {% if room.image.alt_text %}alt="{{room.image.alt_text}}"{% endif %}>
   {% endif %}
   <div class="col-lg-6 col-md-4">
+
+    {% if room.room_type %}
+      <p>Room type: {{room.room_type.name}}</p>
+      <p>Capacity: {{room.room_type.capacity}}</p>
+    {% endif %}
+  
+    {% if room.facilities %}
+      <p>Facilities available at this room:</p>
+      <ul class="list-group">
+        {% for facility in room.facilities.all %}
+        <li class="list-group-item">{%if facility.img%}<img src="{{facility.img.url}}" alt="facility.name" width="50" height="50">{%endif%}{{facility.description}}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
     {% if authenticated %}
       {% include "booking_system/booking_form.html" %}
     {% else %}
@@ -19,8 +34,8 @@
     </div>
   </div>
   
-  <h2>Experiences of our guests</h2>
-  <p>These reviews should only be related to this specific room.</p>
+  <h2 class="text-center">Experiences of our guests</h2>
+  <p class="text-center text-secondary">These reviews should only be related to this specific room.</p>
   {% include "booking_system/review_block.html" %}
 
 </div>

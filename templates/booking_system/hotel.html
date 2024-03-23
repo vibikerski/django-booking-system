@@ -5,9 +5,19 @@
 
 {% block content %}
 <div class="container">
-    <h1 class="text-primary">Hotel {{hotel.name}}</h1>
-    <div class="grid text-center row">
-      <p class="col-xs-12 col-sm-12 col-md-4 col-lg-6">{{hotel.description}}</p>
+    <h1 class="text-primary">Hotel "{{hotel.name}}"</h1>
+    <div class="grid row">
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-6">
+      <p class="text-center">{{hotel.description}}</p>
+      {% if hotel.amenities %}
+      <p>Amenities available at this hotel:</p>
+      <ul class="list-group">
+        {% for amenity in hotel.amenities.all %}
+        <li class="list-group-item">{%if amenity.img%}<img src="{{amenity.img.url}}" alt="amenity.name" width="50" height="50">{%endif%}{{amenity.description}}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      </div>
       {% if hotel.image %}
       <img class="img-thumbnail col-xs-12 col-sm-12 col-md-8 col-lg-6" src="{{ hotel.image.url }}">
       {% endif %}
@@ -19,8 +29,8 @@
       {% endfor %}
     </ul>
 
-    <h2>Experiences of our guests</h2>
-    <p>These reviews should be related to the general experience at the hotel and not the state of the specific room.</p>
+    <h2 class="text-center">Experiences of our guests</h2>
+    <p class="text-center text-secondary">These reviews should be related to the general experience at the hotel and not the state of the specific room.</p>
   {% include "booking_system/review_block.html" %}
 </div>
 {% endblock content %}
