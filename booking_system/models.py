@@ -28,6 +28,18 @@ class Amenity(models.Model):
     def __str__(self):
         return self.name
 
+class Country(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+class City(models.Model):
+    name = models.CharField(max_length=255)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 class Hotel(models.Model):
     name = models.CharField(max_length=511)
@@ -36,8 +48,14 @@ class Hotel(models.Model):
     reviews = fields.GenericRelation(Review)
     amenities = models.ManyToManyField(Amenity)
     
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
+    specific_location = models.CharField(max_length=511)
+    
     def __str__(self):
         return self.name
+
+    def location(self):
+        return f'{self.city.country}, {self.city}, {self.specific_location}'
 
 
 class RoomType(models.Model):
