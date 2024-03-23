@@ -48,5 +48,5 @@ const validateDate = (dateInput) => {
   validateDateRange(dateInput1, dateInput2);
 }
 
-dateInput1.addEventListener("input", () => validateDate);
-dateInput2.addEventListener("input", () => validateDate);
+dateInput1.addEventListener("input", () => validateDate(dateInput1));
+dateInput2.addEventListener("input", () => validateDate(dateInput2));

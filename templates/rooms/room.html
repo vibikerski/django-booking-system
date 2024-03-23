@@ -16,6 +16,7 @@
       <p>Room type: {{room.room_type.name}}</p>
       <p>Capacity: {{room.room_type.capacity}}</p>
     {% endif %}
+    <p>Price for one day: {{room.current_price}}</p>
   
     {% if room.facilities %}
       <p>Facilities available at this room:</p>
@@ -36,12 +37,12 @@
   
   <h2 class="text-center">Experiences of our guests</h2>
   <p class="text-center text-secondary">These reviews should only be related to this specific room.</p>
-  {% include "booking_system/review_block.html" %}
+  {% include "reviews/review_block.html" %}
 
 </div>
 {% endblock content %}
 
 {% block js %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="{% static 'booking_system/js/room.js' %}" type="text/javascript" data-roomid="{{room.id|safe}}"></script>
+<script src="{% static 'rooms/js/room.js' %}" type="text/javascript" data-roomid="{{room.id|safe}}"></script>
 {% endblock js %}
