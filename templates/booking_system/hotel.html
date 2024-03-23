@@ -9,7 +9,7 @@
     <div class="grid text-center row">
       <p class="col-xs-12 col-sm-12 col-md-4 col-lg-6">{{hotel.description}}</p>
       {% if hotel.image %}
-      <img class="img-thumbnail col-xs-12 col-sm-12 col-md-8 col-lg-6"src="{% static hotel.image.url %}" {% if hotel.image.alt_text %}alt="{{hotel.image.alt_text}}"{% endif %}>
+      <img class="img-thumbnail col-xs-12 col-sm-12 col-md-8 col-lg-6" src="{{ hotel.image.url }}">
       {% endif %}
     </div>
     <h1 class="text-primary">{{ hotel.name }}'s rooms:</h1>

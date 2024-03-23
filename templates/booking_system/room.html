@@ -8,7 +8,7 @@
   <div class="grid row">
   <h1  class="text-primary">Room <strong>{{ room.name }}</strong> in hotel "<a href="{% url 'hotel' hotel_id %}">{{ hotel_name }}</a>"</h1>
   {% if room.image %}
-  <img class="img-thumbnail col-xs-12 col-sm-12 col-md-8 col-lg-6" src="{% static room.image.url %}" {% if room.image.alt_text %}alt="{{room.image.alt_text}}"{% endif %}>
+  <img class="img-thumbnail col-xs-12 col-sm-12 col-md-8 col-lg-6" src="{{ room.image.url }}" {% if room.image.alt_text %}alt="{{room.image.alt_text}}"{% endif %}>
   {% endif %}
   <div class="col-lg-6 col-md-4">
     {% if authenticated %}
