@@ -1,4 +1,4 @@
-<nav class="nav justify-content-end">
+<!-- <nav class="nav justify-content-end">
     <a href="{% url 'main_page'%}" class="nav-link">Main page</a>
     {% if user.is_authenticated %}
     <a href="{% url 'logout' %}" class="nav-link">Log out</a>
@@ -8,4 +8,16 @@
     <a href="{% url 'login' %}" class="nav-link">Log in</a>
     {% endif %}
     <span class="nav-link disabled">Hotel booking system.</span>
+</nav> -->
+
+<nav class="nav justify-content-start bg-body-dark">
+    <a href="{% url 'main_page'%}" class="nav-link text-light">Main page</a>
+    {% if user.is_authenticated %}
+    <a href="{% url 'logout' %}" class="nav-link text-light">Log out</a>
+    <a href="{% url 'account' %}" class="nav-link text-light">{{user.get_username}}</a>
+    {% else %}
+    <a href="{% url 'register' %}" class="nav-link text-light">Register</a>
+    <a href="{% url 'login' %}" class="nav-link text-light">Log in</a>
+    {% endif %}
+    <span class="nav-link disabled text-light">Hotel booking system.</span>
 </nav>
