@@ -32,7 +32,7 @@ class Hotel(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to='booking_system/', max_length=100, null=True, blank=True)
     reviews = fields.GenericRelation(Review)
-    amenities = models.ManyToManyField(Amenity)
+    amenities = models.ManyToManyField(Amenity, blank=True)
     
     city = models.ForeignKey(City, on_delete=models.CASCADE)
     specific_location = models.CharField(max_length=511)

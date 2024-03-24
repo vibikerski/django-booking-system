@@ -4,9 +4,7 @@
 
 {% block content %}
 <div class="container">
-    <h1 class="text-primary">Welcome to our website!</h1>
-    <p>Here you can book a room for a specific amount of days and see, what do other users think about the room.</p>
-    <h2 class="text-primary">List of all our hotels:</h2>
+    <h2 class="text-primary">List of our hotels:</h2>
     <ul class="list-group list-group-flush">
       {% for hotel in hotels %}
         <li class="list-group-item bg-light"><a href="{% url 'hotel' hotel.id%}" class="text-decoration-none">{{ hotel.name }}</a></li>

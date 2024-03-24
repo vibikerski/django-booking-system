@@ -1,5 +1,5 @@
 <nav class="nav justify-content-end">
-    <a href="{% url 'hotels'%}" class="nav-link">See all hotels</a>
+    <a href="{% url 'main_page'%}" class="nav-link">Main page</a>
     {% if user.is_authenticated %}
     <a href="{% url 'logout' %}" class="nav-link">Log out</a>
     <a href="{% url 'account' %}" class="nav-link">{{user.get_username}}</a>
