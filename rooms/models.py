@@ -28,7 +28,7 @@ class Room(models.Model):
     room_type = models.ForeignKey(RoomType, on_delete=models.SET_NULL, null=True, blank=True)
     image = models.ImageField(upload_to='booking_system/', max_length=100, null=True, blank=True)
     reviews = fields.GenericRelation(Review)
-    facilities = models.ManyToManyField(Facility)
+    facilities = models.ManyToManyField(Facility, blank=True)
     current_price = models.IntegerField(validators=[MinValueValidator(1)])
     
     def __str__(self):
