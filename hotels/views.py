@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.urls import reverse
 from hotels.models import Hotel, City, Country
-from rooms.models import Room
+from rooms.models import Room, RoomType
 
 
 def get_cities(request, country_id):
@@ -35,6 +35,19 @@ def get_hotels(request):
 def get_hotel(request, hotel_id):
     hotel = get_object_or_404(Hotel, id=hotel_id)
     rooms = Room.objects.filter(hotel=hotel)
+    
+    room_types = RoomType.objects.all()
+    
+    if capacity := request.GET.get("capacity"):
+        rooms = rooms.filter(capacity=capacity)
+    if min_price := request.GET.get("min_price"):
+        rooms = rooms.filter(current_price__gte=min_price)
+    if max_price := request.GET.get("max_price"):
+        rooms = rooms.filter(current_price__lte=max_price)
+    if room_type_id := request.GET.get("room_type"):
+        room_type = get_object_or_404(RoomType, id=room_type_id)
+        rooms = rooms.filter(room_type=room_type)
+
     reviews = hotel.reviews.all()
     review_url = reverse('review_hotel', args=[hotel_id])
     
@@ -44,6 +57,7 @@ def get_hotel(request, hotel_id):
         'authenticated': request.user.is_authenticated,
         'reviews': reviews,
         'review_url': review_url,
+        'room_types': room_types,
     }
     
     return render(
