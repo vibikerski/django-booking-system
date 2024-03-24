@@ -1,0 +1,58 @@
+.container {
+    margin-top: 2em; 
+}
+
+main {
+    overflow: auto;
+    padding-bottom: 100px;
+}
+
+html, body {
+    height: 100%;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa; 
+    padding: 1.5em 0;
+    box-shadow: 0 -0.2em 0.4em rgba(0, 0, 0, 0.1);
+    font-size: 0.875em;
+}
+
+footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+@media (min-width: 992px) {
+    footer {
+        text-align: left;
+        padding: 1em 3.125em;
+    }
+}
+
+.nav {
+    background-color: #343a40; 
+    padding: 0.5em 1em;
+    font-size: 0.875em;
+}
+
+.nav-link {
+    color: #adb5bd;
+}
+
+.nav-link:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.disabled {
+    opacity: 0.5;
+}
