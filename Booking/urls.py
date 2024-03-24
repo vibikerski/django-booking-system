@@ -21,12 +21,12 @@ from django.urls import path, include
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("", include("booking_system.urls")),
-    path("", include('auth_system.urls')),
-    path("", include("hotels.urls")),
-    path("rooms/", include("rooms.urls")),
-    path("", include("reviews.urls"))
+    path('booking_system/admin/', admin.site.urls),
+    path("booking_system/", include("booking_system.urls")),
+    path("booking_system/", include('auth_system.urls')),
+    path("booking_system/", include("hotels.urls")),
+    path("booking_system/rooms/", include("rooms.urls")),
+    path("booking_system/", include("reviews.urls"))
 ]
 
 if settings.DEBUG is True:
