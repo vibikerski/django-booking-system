@@ -7,7 +7,6 @@ from hotels.models import Hotel
 
 class RoomType(models.Model):
     name = models.CharField(max_length=127)
-    capacity = models.IntegerField(validators=[MinValueValidator(1)])
 
     def __str__(self):
         return self.name
@@ -30,6 +29,7 @@ class Room(models.Model):
     reviews = fields.GenericRelation(Review)
     facilities = models.ManyToManyField(Facility, blank=True)
     current_price = models.IntegerField(validators=[MinValueValidator(1)])
+    capacity = models.IntegerField(validators=[MinValueValidator(1)])
     
     def __str__(self):
         return self.name

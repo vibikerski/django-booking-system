@@ -23,10 +23,37 @@
       <img class="img-thumbnail col-xs-12 col-sm-12 col-md-8 col-lg-6" src="{{ hotel.image.url }}">
       {% endif %}
     </div>
-    <h1 class="text-primary">{{ hotel.name }}'s rooms:</h1>
+    <h1 class="text-primary">{{ hotel.name }}'s rooms</h1>
+    <p>Search for specific rooms:</p>
+    <form id="filter-form" method="get" class="row gx-3 align-items-center">
+      <div class="col-md-3">
+          <label for="capacity" class="form-label">Capacity</label>
+          <input type="number" id="capacity" name="capacity" min="1" class="form-control">
+      </div>
+      <div class="col-md-3">
+          <label for="min_price" class="form-label">Minimal price:</label>
+          <input type="number" id="min_price" name="min_price" min="1" class="form-control">
+      </div>
+      <div class="col-md-3">
+          <label for="max_price" class="form-label">Maximal price:</label>
+          <input type="number" id="max_price" name="max_price" max="50000" class="form-control">
+      </div>
+      <div class="col-md-3">
+          <label for="room_type" class="form-label">Room type:</label>
+          <select id="room_type" name="room_type" class="form-select">
+              <option value="">All types</option>
+              {% for type in room_types %}
+              <option value="{{ type.id }}">{{ type.name }}</option>
+              {% endfor %}
+          </select>
+      </div>
+      <div class="col-md-12 mt-3">
+          <button type="submit" class="btn btn-primary">Filter</button>
+      </div>
+    </form>  
     <ul class="list-group list-group-flush">
       {% for room in rooms %}
-        <li class="list-group-item bg-light"><a href="{% url 'room' room.id%}">{{ room.name }}</a></li>
+        <li class="list-group-item bg-light"><a href="{% url 'room' room.id%}">{{ room.name }}</a>, {{room.current_price}} per day</li>
       {% endfor %}
     </ul>
 
